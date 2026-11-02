@@ -37,10 +37,7 @@ $argumentsFile = Join-Path $build 'javac.args'
 ) | Set-Content $argumentsFile -Encoding utf8
 & $javac ('@' + $argumentsFile) 2>&1 | Tee-Object (Join-Path $logs 'driver-compile.txt')
 if ($LASTEXITCODE -ne 0) { throw 'IDE verification helper compilation failed.' }
-# Keep the exact API signatures with the evidence for diagnosing IDE version differences.
-@('-classpath', ('"' + $classPath + '"'), 'com.android.tools.idea.gradle.project.sync.GradleSyncState') |
-    Set-Content (Join-Path $build 'javap.args') -Encoding utf8
-& $javap ('@' + (Join-Path $build 'javap.args')) 2>&1 | Set-Content (Join-Path $logs 'sync-api.txt')
+# The loaded plugin records the actual sync API signatures in ide-events.txt.
 Copy-Item (Join-Path $PSScriptRoot 'studio-verification/plugin.xml') (Join-Path $classes 'META-INF/plugin.xml')
 & $jar --create --file (Join-Path $pluginLib 'lab-verification.jar') -C $classes .
 if ($LASTEXITCODE -ne 0) { throw 'IDE verification plugin packaging failed.' }
@@ -104,6 +101,7 @@ try {
         $eventsFile = Join-Path $logs 'ide-events.txt'
         if (-not (Test-Path $eventsFile)) { continue }
         $events = Get-Content $eventsFile -Raw
+        if ($events -match 'DRIVER_ERROR') { throw 'The IDE helper reported an API/runtime error; inspect ide-events.txt.' }
         if ($events -match 'PROCESS_NOT_STARTED') { throw 'Android Studio reported that app execution did not start.' }
         if ($events -match 'SYNC_READY' -and -not $deviceReady) { throw 'IDE sync completed but no Android device is available for Run.' }
         if ($events -notmatch 'PROCESS_STARTED') { continue }

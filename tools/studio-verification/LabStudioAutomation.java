@@ -2,6 +2,8 @@ package lab.verification;
 
 import com.intellij.execution.ExecutionListener;
 import com.intellij.execution.ExecutionManager;
+import com.intellij.execution.ExecutionTarget;
+import com.intellij.execution.ExecutionTargetManager;
 import com.intellij.execution.RunManager;
 import com.intellij.execution.RunnerAndConfigurationSettings;
 import com.intellij.execution.executors.DefaultRunExecutor;
@@ -18,6 +20,8 @@ import com.intellij.openapi.startup.StartupActivity;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.WindowManager;
+import com.intellij.openapi.wm.ToolWindow;
+import com.intellij.openapi.wm.ToolWindowManager;
 import java.awt.Frame;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
@@ -28,6 +32,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public final class LabStudioAutomation implements StartupActivity, DumbAware {
     private final AtomicBoolean requested = new AtomicBoolean();
     private boolean syncRequested;
+    private boolean apiRecorded;
     private String previousState = "";
     private static Path evidence() { return Path.of(System.getProperty("lab.evidence.path")); }
     private static synchronized void event(String name, String detail) {
@@ -44,6 +49,10 @@ public final class LabStudioAutomation implements StartupActivity, DumbAware {
             @Override public void processStarted(String executorId, ExecutionEnvironment env, ProcessHandler handler) {
                 if(!env.getRunProfile().getClass().getName().endsWith(".AndroidRunConfiguration")) return;
                 event("PROCESS_STARTED", executorId+" "+env.getRunProfile().getName()+" "+handler.getClass().getName());
+                ApplicationManager.getApplication().invokeLater(() -> {
+                    ToolWindow run=ToolWindowManager.getInstance(project).getToolWindow("Run");
+                    if(run!=null) run.activate(null);
+                });
             }
             @Override public void processNotStarted(String executorId, ExecutionEnvironment env) {
                 event("PROCESS_NOT_STARTED", executorId+" "+env.getRunProfile().getName());
@@ -66,8 +75,12 @@ public final class LabStudioAutomation implements StartupActivity, DumbAware {
             if(frame!=null) frame.setExtendedState(Frame.MAXIMIZED_BOTH);
             Class<?> type=Class.forName("com.android.tools.idea.gradle.project.sync.GradleSyncState");
             Object state=type.getMethod("getInstance", Project.class).invoke(null,project);
+            if(!apiRecorded){apiRecorded=true;event("SYNC_API",java.util.Arrays.toString(type.getMethods()));}
             boolean syncing=(Boolean)type.getMethod("isSyncInProgress").invoke(state);
-            String result=String.valueOf(type.getMethod("getLastSyncResult").invoke(state));
+            boolean failed=(Boolean)type.getMethod("lastSyncFailed").invoke(state);
+            long finished=((Number)type.getMethod("getLastSyncFinishedTimeStamp").invoke(state)).longValue();
+            String needed=String.valueOf(type.getMethod("isSyncNeeded").invoke(state));
+            String result=(!failed && finished>0 && needed.equals("NO"))?"SUCCESS":("finished="+finished+" failed="+failed+" needed="+needed);
             boolean dumb=DumbService.isDumb(project);
             String description="syncing="+syncing+" result="+result+" indexing="+dumb;
             if(!description.equals(previousState)){event("SYNC_STATE",description);previousState=description;}
@@ -90,6 +103,18 @@ public final class LabStudioAutomation implements StartupActivity, DumbAware {
                 if(!className.endsWith(".AndroidRunConfiguration")) continue;
                 requested.set(true);
                 manager.setSelectedConfiguration(config);
+                for(ExecutionTarget target:ExecutionTargetManager.getTargetsToChooseFor(project,config.getConfiguration())){
+                    event("RUN_TARGET",target.getId()+" "+target.getDisplayName());
+                    if(!target.getId().equals("default_target") && ExecutionTargetManager.canRun(config.getConfiguration(),target)){
+                        ExecutionTargetManager.setActiveTarget(project,target);break;
+                    }
+                }
+                ToolWindowManager windows=ToolWindowManager.getInstance(project);
+                for(String id:windows.getToolWindowIds()){
+                    if(id.equals("Project") || id.equals("Run") || id.equals("Build")) continue;
+                    ToolWindow window=windows.getToolWindow(id);
+                    if(window!=null && window.isVisible())window.hide(null);
+                }
                 VirtualFile source=LocalFileSystem.getInstance().findFileByPath(
                     project.getBasePath()+"/app/src/main/java/cn/edu/hnie/shoppingcart/MainActivity.java");
                 if(source!=null) FileEditorManager.getInstance(project).openFile(source,true);

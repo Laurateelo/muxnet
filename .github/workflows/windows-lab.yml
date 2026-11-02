@@ -40,13 +40,20 @@ jobs:
         env:
           RUN_DEVICE_TESTS: ${{ github.event_name == 'push' || inputs.device_tests }}
         run: ./tools/windows-ci.ps1 -Phase Build -DeviceTests:($env:RUN_DEVICE_TESTS -eq 'true')
-      - name: Boot emulator and run 21 device checks
-        if: ${{ github.event_name == 'push' || inputs.device_tests }}
-        run: ./tools/windows-ci.ps1 -Phase Device -DeviceTests
-      - name: Capture actual Android Studio desktop
-        if: ${{ always() && (github.event_name == 'push' || inputs.studio_capture) }}
-        timeout-minutes: 18
-        run: ./tools/capture-studio-windows.ps1
+      - name: Device checks and Android Studio execution
+        if: ${{ github.event_name == 'push' || inputs.device_tests || inputs.studio_capture }}
+        timeout-minutes: 45
+        env:
+          RUN_DEVICE_TESTS: ${{ github.event_name == 'push' || inputs.device_tests }}
+          CAPTURE_STUDIO: ${{ github.event_name == 'push' || inputs.studio_capture }}
+        run: |
+          if ($env:RUN_DEVICE_TESTS -eq 'true') {
+            ./tools/windows-ci.ps1 -Phase Device -DeviceTests
+            if ($LASTEXITCODE -ne 0) { throw 'Device verification failed.' }
+          }
+          if ($env:CAPTURE_STUDIO -eq 'true') {
+            ./tools/capture-studio-windows.ps1
+          }
       - name: Save original logs, APK and screenshots
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
