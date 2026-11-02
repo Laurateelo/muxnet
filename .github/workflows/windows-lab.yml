@@ -30,6 +30,8 @@ jobs:
         shell: pwsh
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
@@ -40,7 +42,7 @@ jobs:
         run: ./tools/windows-ci.ps1 -DeviceTests:($env:RUN_DEVICE_TESTS -eq 'true')
       - name: Capture actual Android Studio desktop
         if: ${{ always() && (github.event_name == 'push' || inputs.studio_capture) }}
-        timeout-minutes: 15
+        timeout-minutes: 18
         run: ./tools/capture-studio-windows.ps1
       - name: Save original logs, APK and screenshots
         if: ${{ always() }}

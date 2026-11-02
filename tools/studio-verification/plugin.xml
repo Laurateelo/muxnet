@@ -1,0 +1,13 @@
+<idea-plugin>
+  <id>lab.shoppingcart.windows.verification</id>
+  <name>Shopping Cart Windows Verification</name>
+  <version>1.0</version>
+  <vendor>Lab Verification</vendor>
+  <idea-version since-build="242" until-build="242.*" />
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.java</depends>
+  <depends>org.jetbrains.android</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <postStartupActivity implementation="lab.verification.LabStudioAutomation" />
+  </extensions>
+</idea-plugin>

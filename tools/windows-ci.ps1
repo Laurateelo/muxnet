@@ -12,13 +12,17 @@ $sdk = $env:ANDROID_HOME
 $sdkManager = @(Get-ChildItem (Join-Path $sdk 'cmdline-tools') -Filter sdkmanager.bat -Recurse | Sort-Object FullName -Descending)[0].FullName
 $avdManager = Join-Path (Split-Path $sdkManager -Parent) 'avdmanager.bat'
 $packages = @('platforms;android-35','build-tools;34.0.0','platform-tools')
-$imagePackage = 'system-images;android-28;google_apis;x86_64'
+$imagePackage = 'system-images;android-28;google_apis;x86'
 if ($DeviceTests) { $packages += @('emulator',$imagePackage) }
 $responses = 1..100 | ForEach-Object { 'y' }
 $responses | & $sdkManager --licenses 2>&1 | Tee-Object (Join-Path $logs 'sdk-licenses.txt')
 if ($LASTEXITCODE -ne 0) { throw 'SDK license command failed.' }
 & $sdkManager --install @packages 2>&1 | Tee-Object (Join-Path $logs 'sdk-install.txt')
 if ($LASTEXITCODE -ne 0) { throw 'SDK component installation failed.' }
+
+# Preserve independent Windows build evidence even if emulator setup fails.
+& (Join-Path $PSScriptRoot 'verify-windows.ps1') -JavaHome $env:JAVA_HOME -SdkPath $sdk
+if ($LASTEXITCODE -ne 0) { throw 'Windows build verification failed.' }
 
 if ($DeviceTests) {
     $env:ANDROID_AVD_HOME = Join-Path $env:RUNNER_TEMP 'shoppingcart-avd'
@@ -44,10 +48,12 @@ if ($DeviceTests) {
     $configLines | Set-Content $config -Encoding ascii
     $emulator = Join-Path $sdk 'emulator/emulator.exe'
     $adb = Join-Path $sdk 'platform-tools/adb.exe'
+    & $adb start-server
+    if ($LASTEXITCODE -ne 0) { throw 'ADB server could not start.' }
     $emu = Start-Process -FilePath $emulator -ArgumentList @(
         '-avd','LabCartWindows','-port','5554','-accel','off',
         '-gpu','swiftshader_indirect','-no-window','-no-audio','-no-snapshot',
-        '-no-boot-anim','-memory','2048','-cores','2',
+        '-feature','-Vulkan','-no-metrics','-no-boot-anim','-memory','2048','-cores','2',
         '-camera-back','none','-camera-front','none'
     ) -PassThru -RedirectStandardOutput (Join-Path $logs 'emulator-stdout.txt') -RedirectStandardError (Join-Path $logs 'emulator-stderr.txt')
     $emu.Id | Set-Content (Join-Path $logs 'emulator-pid.txt')
@@ -65,7 +71,5 @@ if ($DeviceTests) {
         & $adb -s emulator-5554 shell settings put global $setting 0
     }
     & (Join-Path $PSScriptRoot 'verify-windows.ps1') -JavaHome $env:JAVA_HOME -SdkPath $sdk -DeviceTests -Serial emulator-5554
-} else {
-    & (Join-Path $PSScriptRoot 'verify-windows.ps1') -JavaHome $env:JAVA_HOME -SdkPath $sdk
 }
 if ($LASTEXITCODE -ne 0) { throw 'Windows verification failed; inspect the saved evidence.' }
