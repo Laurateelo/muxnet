@@ -36,10 +36,13 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-      - name: Build and verify on Windows
+      - name: Windows build, 8 JUnit tests and lint
         env:
           RUN_DEVICE_TESTS: ${{ github.event_name == 'push' || inputs.device_tests }}
-        run: ./tools/windows-ci.ps1 -DeviceTests:($env:RUN_DEVICE_TESTS -eq 'true')
+        run: ./tools/windows-ci.ps1 -Phase Build -DeviceTests:($env:RUN_DEVICE_TESTS -eq 'true')
+      - name: Boot emulator and run 21 device checks
+        if: ${{ github.event_name == 'push' || inputs.device_tests }}
+        run: ./tools/windows-ci.ps1 -Phase Device -DeviceTests
       - name: Capture actual Android Studio desktop
         if: ${{ always() && (github.event_name == 'push' || inputs.studio_capture) }}
         timeout-minutes: 18

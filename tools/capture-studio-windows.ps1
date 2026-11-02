@@ -30,7 +30,7 @@ $jar = Join-Path $studioHome 'jbr/bin/jar.exe'
 $javap = Join-Path $studioHome 'jbr/bin/javap.exe'
 $argumentsFile = Join-Path $build 'javac.args'
 @(
-    '--release', '17', '-encoding', 'UTF-8', '-classpath', ('"' + $classPath + '"'),
+    '--release', '17', '-proc:none', '-encoding', 'UTF-8', '-classpath', ('"' + $classPath + '"'),
     '-d', ('"' + $classes.Replace('\','/') + '"'),
     ('"' + (Join-Path $PSScriptRoot 'studio-verification/LabStudioAutomation.java').Replace('\','/') + '"'),
     ('"' + (Join-Path $PSScriptRoot 'studio-verification/LabConsentAgent.java').Replace('\','/') + '"')
