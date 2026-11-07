@@ -993,6 +993,110 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 30,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "optional_02_search"
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "win",
+            "r"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "cmd"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "win",
+            "up"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "chcp 65001"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "type",
+          "text": "D:\\mysql\\bin\\mysql --default-character-set=utf8mb4 -u root"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        },
+        {
+          "kind": "type",
+          "text": "tee D:/lab2-ci/evidence/mysql-direct-query.txt"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "type",
+          "text": "SHOW DATABASES;"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "type",
+          "text": "USE lab2;"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "type",
+          "text": "SELECT * FROM student;"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "type",
+          "text": "SELECT COUNT(*) AS total FROM student;"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "type",
+          "text": "notee"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        }
+      ],
+      "settle": 2
     }
   ]
 }
