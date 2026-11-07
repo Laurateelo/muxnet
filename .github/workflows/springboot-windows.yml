@@ -1,0 +1,43 @@
+name: Spring Boot MyBatis Windows evidence
+on:
+  push:
+    branches: [codex/springboot-lab2-windows]
+    paths-ignore: ['control/**']
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: springboot-lab2-windows
+  cancel-in-progress: false
+jobs:
+  verify:
+    runs-on: windows-2022
+    timeout-minutes: 90
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: actions/cache@v4
+        with:
+          path: C:/lab2-downloads
+          key: lab2-official-windows-tools-v1
+      - name: Prepare actual Windows applications and compile project
+        run: ./tools/setup-windows.ps1
+      - name: Operate desktop and record native pixels
+        timeout-minutes: 65
+        run: python tools/desktop-control.py
+      - name: Preserve original evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lab2-windows-final-${{ github.run_id }}
+          path: D:/lab2-ci/evidence
+          retention-days: 14
+          if-no-files-found: warn

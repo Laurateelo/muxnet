@@ -1,0 +1,186 @@
+{
+  "info": {
+    "name": "实验二 学生管理接口测试",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "按编号顺序运行。第09项需要先停止并重启应用。开始前使用空的专用实验库。"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "studentId1",
+      "value": "1"
+    },
+    {
+      "key": "studentId2",
+      "value": "2"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 查询空表",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students"
+      },
+      "response": []
+    },
+    {
+      "name": "02 新增张三",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"张三\",\n  \"age\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"studentId1\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 新增李四",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"李四\",\n  \"age\": 21\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [],
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.collectionVariables.set(\"studentId2\", String(pm.response.json().id));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 查询全部",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students"
+      },
+      "response": []
+    },
+    {
+      "name": "05 按编号查询",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students/{{studentId1}}"
+      },
+      "response": []
+    },
+    {
+      "name": "06 修改张三",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/{{studentId1}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"张三丰\",\n  \"age\": 22\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "07 删除李四",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{baseUrl}}/students/{{studentId2}}"
+      },
+      "response": []
+    },
+    {
+      "name": "08 查询最终结果",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students"
+      },
+      "response": []
+    },
+    {
+      "name": "09 重启后再次查询",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students"
+      },
+      "response": []
+    },
+    {
+      "name": "10 选做 人数统计",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students/count"
+      },
+      "response": []
+    },
+    {
+      "name": "11 选做 姓名模糊查询",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/students/search?name=张"
+      },
+      "response": []
+    }
+  ]
+}
