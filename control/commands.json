@@ -317,6 +317,65 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 16,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 460,
+          "y": 339
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "Lab2 Student API"
+        },
+        {
+          "kind": "click",
+          "x": 450,
+          "y": 448
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "D:\\lab2-ci\\evidence"
+        },
+        {
+          "kind": "click",
+          "x": 470,
+          "y": 533
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "apifox_collection"
+        },
+        {
+          "kind": "click",
+          "x": 781,
+          "y": 621
+        }
+      ],
+      "settle": 4
     }
   ]
 }
