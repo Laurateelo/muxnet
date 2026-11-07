@@ -778,6 +778,50 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 25,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "figure_08_final"
+        },
+        {
+          "kind": "click",
+          "x": 736,
+          "y": 746
+        },
+        {
+          "kind": "click",
+          "x": 620,
+          "y": 610
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "end"
+          ]
+        },
+        {
+          "kind": "wait",
+          "seconds": 1
+        },
+        {
+          "kind": "save_figure",
+          "name": "figure_09_sql"
+        },
+        {
+          "kind": "click",
+          "x": 925,
+          "y": 42
+        },
+        {
+          "kind": "wait",
+          "seconds": 4
+        }
+      ],
+      "settle": 1
     }
   ]
 }
