@@ -894,6 +894,53 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 28,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "figure_11_restart_persistence"
+        },
+        {
+          "kind": "click",
+          "x": 121,
+          "y": 438
+        },
+        {
+          "kind": "click",
+          "x": 550,
+          "y": 152
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "http://localhost:8080/students/count"
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "s"
+          ]
+        },
+        {
+          "kind": "click",
+          "x": 931,
+          "y": 152
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        }
+      ],
+      "settle": 1
     }
   ]
 }
