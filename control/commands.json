@@ -303,6 +303,20 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 15,
+      "ops": [
+        {
+          "kind": "type",
+          "text": "D:\\workspace\\lab2-demo\\apifox_postman_collection.json"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        }
+      ],
+      "settle": 2
     }
   ]
 }
