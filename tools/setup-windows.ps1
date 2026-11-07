@@ -30,7 +30,7 @@ if ($vcProcess.ExitCode -notin 0,1638,3010) { throw "VC++ runtime installation e
 "VC++ redistributable exit: $($vcProcess.ExitCode)" | Set-Content (Join-Path $evidence 'vc-runtime.txt')
 
 $mysqlZip = Join-Path $cache 'mysql-8.4.11-winx64.zip'
-Download 'https://downloads.mysql.com/archives/get/p/23/file/mysql-8.4.11-winx64.zip' $mysqlZip
+Download 'https://cdn.mysql.com/archives/mysql-8.4/mysql-8.4.11-winx64.zip' $mysqlZip
 Expand-Archive $mysqlZip -DestinationPath $base -Force
 Move-Item (Join-Path $base 'mysql-8.4.11-winx64') 'D:\mysql'
 & 'D:\mysql\bin\mysqld.exe' --version | Set-Content (Join-Path $evidence 'mysql-version.txt')
