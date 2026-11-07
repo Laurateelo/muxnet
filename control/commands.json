@@ -9,6 +9,15 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 2,
+      "ops": [
+        {
+          "kind": "finish"
+        }
+      ],
+      "settle": 1
     }
   ]
 }
