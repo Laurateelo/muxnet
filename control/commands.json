@@ -822,6 +822,25 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 26,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "restart_01_stopped"
+        },
+        {
+          "kind": "click",
+          "x": 847,
+          "y": 42
+        },
+        {
+          "kind": "wait",
+          "seconds": 12
+        }
+      ],
+      "settle": 1
     }
   ]
 }
