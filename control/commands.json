@@ -272,6 +272,26 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 13,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "figure_03_startup"
+        },
+        {
+          "kind": "click",
+          "x": 688,
+          "y": 746
+        },
+        {
+          "kind": "click",
+          "x": 719,
+          "y": 476
+        }
+      ],
+      "settle": 2
     }
   ]
 }
