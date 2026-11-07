@@ -243,6 +243,35 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 12,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 64,
+          "y": 543
+        },
+        {
+          "kind": "click",
+          "x": 500,
+          "y": 459,
+          "count": 2
+        },
+        {
+          "kind": "click",
+          "x": 600,
+          "y": 610
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "end"
+          ]
+        }
+      ],
+      "settle": 1
     }
   ]
 }
