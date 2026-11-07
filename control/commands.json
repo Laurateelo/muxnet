@@ -376,6 +376,42 @@
         }
       ],
       "settle": 4
+    },
+    {
+      "id": 17,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 108,
+          "y": 168
+        },
+        {
+          "kind": "click",
+          "x": 550,
+          "y": 152
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "http://localhost:8080/students"
+        },
+        {
+          "kind": "click",
+          "x": 931,
+          "y": 152
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        }
+      ],
+      "settle": 1
     }
   ]
 }
