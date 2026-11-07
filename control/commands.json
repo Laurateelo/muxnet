@@ -126,6 +126,26 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 8,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 688,
+          "y": 746
+        },
+        {
+          "kind": "click",
+          "x": 657,
+          "y": 634
+        },
+        {
+          "kind": "wait",
+          "seconds": 5
+        }
+      ],
+      "settle": 1
     }
   ]
 }
