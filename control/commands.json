@@ -211,6 +211,38 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 11,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 33,
+          "y": 534
+        },
+        {
+          "kind": "click",
+          "x": 855,
+          "y": 648
+        },
+        {
+          "kind": "wait",
+          "seconds": 1
+        },
+        {
+          "kind": "save_figure",
+          "name": "figure_02_project"
+        },
+        {
+          "kind": "idea",
+          "action": "build-run"
+        },
+        {
+          "kind": "wait",
+          "seconds": 15
+        }
+      ],
+      "settle": 2
     }
   ]
 }
