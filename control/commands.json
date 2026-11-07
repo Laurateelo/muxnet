@@ -1,1 +1,14 @@
-{"run_id":"pending","commands":[]}
+{
+  "run_id": "42372513822",
+  "commands": [
+    {
+      "id": 1,
+      "ops": [
+        {
+          "kind": "capture"
+        }
+      ],
+      "settle": 1
+    }
+  ]
+}
