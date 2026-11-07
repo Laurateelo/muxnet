@@ -941,6 +941,58 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 29,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "optional_01_count"
+        },
+        {
+          "kind": "click",
+          "x": 125,
+          "y": 468
+        },
+        {
+          "kind": "click",
+          "x": 550,
+          "y": 152
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "http://localhost:8080/students/search?name=张"
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "s"
+          ]
+        },
+        {
+          "kind": "click",
+          "x": 931,
+          "y": 152
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        },
+        {
+          "kind": "click",
+          "x": 261,
+          "y": 515
+        }
+      ],
+      "settle": 1
     }
   ]
 }
