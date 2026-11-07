@@ -1097,6 +1097,27 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 31,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "figure_10_mysql"
+        },
+        {
+          "kind": "type",
+          "text": "exit"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        },
+        {
+          "kind": "finish"
+        }
+      ],
+      "settle": 1
     }
   ]
 }
