@@ -841,6 +841,59 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 27,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 688,
+          "y": 746
+        },
+        {
+          "kind": "click",
+          "x": 118,
+          "y": 408
+        },
+        {
+          "kind": "click",
+          "x": 550,
+          "y": 152
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "http://localhost:8080/students"
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "s"
+          ]
+        },
+        {
+          "kind": "click",
+          "x": 931,
+          "y": 152
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        },
+        {
+          "kind": "click",
+          "x": 261,
+          "y": 515
+        }
+      ],
+      "settle": 1
     }
   ]
 }
