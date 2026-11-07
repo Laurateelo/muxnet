@@ -14,6 +14,29 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 2,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "figure_01_mysql_startup"
+        },
+        {
+          "kind": "activate",
+          "handle": 131670
+        },
+        {
+          "kind": "maximize",
+          "handle": 131670
+        },
+        {
+          "kind": "click",
+          "x": 513,
+          "y": 633
+        }
+      ],
+      "settle": 2
     }
   ]
 }
