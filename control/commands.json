@@ -88,6 +88,21 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 6,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 560,
+          "y": 558
+        },
+        {
+          "kind": "wait",
+          "seconds": 8
+        }
+      ],
+      "settle": 2
     }
   ]
 }
