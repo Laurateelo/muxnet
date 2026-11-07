@@ -5,10 +5,10 @@ name the exact run ID. It supports UI input, screenshots, and the lab IDE helper
 It does not evaluate supplied code or execute arbitrary shell commands.
 """
 from pathlib import Path
-import ctypes,datetime,json,os,subprocess,time,traceback
+import ctypes,datetime,json,os,subprocess,sys,time,traceback
+from ctypes import wintypes
 import requests,pyautogui
 from PIL import ImageGrab
-from pywinauto import Desktop
 
 BASE=Path('D:/lab2-ci'); OUT=BASE/'evidence'; OUT.mkdir(exist_ok=True)
 RUN=os.environ['GITHUB_RUN_ID']; REPO=os.environ['GITHUB_REPOSITORY']; REF=os.environ['GITHUB_REF_NAME']
@@ -19,10 +19,18 @@ user32=ctypes.windll.user32
 
 def windows():
     result=[]
-    for w in Desktop(backend='uia').windows():
-        try:
-            result.append({'title':w.window_text(),'handle':w.handle,'pid':w.process_id(),'rect':[w.rectangle().left,w.rectangle().top,w.rectangle().right,w.rectangle().bottom]})
-        except Exception: pass
+    callback_type=ctypes.WINFUNCTYPE(wintypes.BOOL,wintypes.HWND,wintypes.LPARAM)
+    def collect(handle,_):
+        if user32.IsWindowVisible(handle):
+            title=ctypes.create_unicode_buffer(1024)
+            user32.GetWindowTextW(handle,title,len(title))
+            if title.value:
+                rect=wintypes.RECT();pid=wintypes.DWORD()
+                user32.GetWindowRect(handle,ctypes.byref(rect))
+                user32.GetWindowThreadProcessId(handle,ctypes.byref(pid))
+                result.append({'title':title.value,'handle':int(handle),'pid':pid.value,'rect':[rect.left,rect.top,rect.right,rect.bottom]})
+        return True
+    user32.EnumWindows(callback_type(collect),0)
     return result
 
 def capture(identifier,error=None):
@@ -35,18 +43,12 @@ def capture(identifier,error=None):
     try:state['backend']=requests.get('http://localhost:8080/students',timeout=3).text
     except Exception as e:state['backend']=str(e)
     (folder/'state.json').write_text(json.dumps(state,ensure_ascii=False,indent=2),encoding='utf-8')
-    text=[]
-    for w in Desktop(backend='uia').windows():
-        try:
-            title=w.window_text();text.append(f'WINDOW {title} HWND={w.handle}')
-            if not any(k.lower() in title.lower() for k in ['apifox','idea','lab2','privacy','import','open','agreement']):continue
-            for d in w.descendants()[:450]:
-                try:
-                    info=d.element_info
-                    text.append(f'{info.control_type} | {info.name} | id={info.automation_id} | rect={info.rectangle}')
-                except Exception:pass
-        except Exception:pass
-    (folder/'ui.txt').write_text('\n'.join(text),encoding='utf-8')
+    try:
+        inspection=subprocess.run([sys.executable,str(Path(__file__).with_name('inspect-ui.py'))],capture_output=True,text=True,encoding='utf-8',errors='replace',timeout=15,env={**os.environ,'PYTHONIOENCODING':'utf-8'})
+        ui=inspection.stdout+'\n'+inspection.stderr
+    except subprocess.TimeoutExpired:
+        ui='Accessibility inspection exceeded 15 seconds. Use the original screenshot and native window list.'
+    (folder/'ui.txt').write_text(ui,encoding='utf-8')
     events=OUT/'ide-events.txt'
     if events.exists():(folder/'ide-events.txt').write_bytes(events.read_bytes())
     result=subprocess.run(['node',str(BASE/'upload-artifact.cjs'),f'lab2-live-{RUN}-{identifier:03d}',str(folder)],capture_output=True,text=True,timeout=120)
