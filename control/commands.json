@@ -37,6 +37,21 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 3,
+      "ops": [
+        {
+          "kind": "press",
+          "key": "esc"
+        },
+        {
+          "kind": "click",
+          "x": 736,
+          "y": 746
+        }
+      ],
+      "settle": 2
     }
   ]
 }
