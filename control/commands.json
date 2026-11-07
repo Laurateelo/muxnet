@@ -146,6 +146,21 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 9,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 736,
+          "y": 746
+        },
+        {
+          "kind": "idea",
+          "action": "project"
+        }
+      ],
+      "settle": 2
     }
   ]
 }
