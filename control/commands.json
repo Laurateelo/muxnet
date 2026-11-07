@@ -1,20 +1,16 @@
 {
-  "run_id": "42372513822",
+  "run_id": "42373186179",
   "commands": [
     {
       "id": 1,
       "ops": [
         {
-          "kind": "capture"
-        }
-      ],
-      "settle": 1
-    },
-    {
-      "id": 2,
-      "ops": [
+          "kind": "activate",
+          "handle": 131264
+        },
         {
-          "kind": "finish"
+          "kind": "maximize",
+          "handle": 131264
         }
       ],
       "settle": 1
