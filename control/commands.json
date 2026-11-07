@@ -161,6 +161,56 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 10,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 750,
+          "y": 654
+        },
+        {
+          "kind": "click",
+          "x": 855,
+          "y": 456
+        },
+        {
+          "kind": "click",
+          "x": 51,
+          "y": 534
+        },
+        {
+          "kind": "click",
+          "x": 51,
+          "y": 115
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "shift",
+            "right"
+          ]
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "shift",
+            "right"
+          ]
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "shift",
+            "right"
+          ]
+        }
+      ],
+      "settle": 1
     }
   ]
 }
