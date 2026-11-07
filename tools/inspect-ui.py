@@ -4,7 +4,7 @@ for window in Desktop(backend='uia').windows():
     try:
         title=window.window_text()
         print(f'WINDOW {title} HWND={window.handle}',flush=True)
-        if not any(k in title.lower() for k in ['apifox','idea','lab2','privacy','import','open','agreement']):
+        if not any(k in title.lower() for k in ['apifox','idea','lab2','privacy','import','open','agreement','home','offline','request']):
             continue
         for control in window.descendants()[:450]:
             try:

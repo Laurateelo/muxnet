@@ -12,7 +12,8 @@ from PIL import ImageGrab
 
 BASE=Path('D:/lab2-ci'); OUT=BASE/'evidence'; OUT.mkdir(exist_ok=True)
 RUN=os.environ['GITHUB_RUN_ID']; REPO=os.environ['GITHUB_REPOSITORY']; REF=os.environ['GITHUB_REF_NAME']
-URL=f'https://raw.githubusercontent.com/{REPO}/{REF}/control/commands.json'
+URL=f'https://api.github.com/repos/{REPO}/contents/control/commands.json'
+READ_HEADERS={'Accept':'application/vnd.github.raw+json','Authorization':'Bearer '+os.environ['LAB_REPOSITORY_READ_TOKEN']}
 pyautogui.PAUSE=.25
 pyautogui.FAILSAFE=True
 user32=ctypes.windll.user32
@@ -102,7 +103,7 @@ capture(0)
 seen=set();started=time.monotonic();done=False
 while time.monotonic()-started<3600 and not done:
     try:
-        r=requests.get(URL,params={'run':RUN,'t':int(time.time())},timeout=20);r.raise_for_status();data=r.json()
+        r=requests.get(URL,params={'ref':REF},headers=READ_HEADERS,timeout=20);r.raise_for_status();data=r.json()
         if str(data.get('run_id'))!=RUN:time.sleep(4);continue
         for command in data.get('commands',[]):
             identifier=int(command['id'])
