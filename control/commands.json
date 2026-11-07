@@ -103,6 +103,29 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 7,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 404,
+          "y": 446
+        },
+        {
+          "kind": "wait",
+          "seconds": 12
+        },
+        {
+          "kind": "idea",
+          "action": "prepare"
+        },
+        {
+          "kind": "wait",
+          "seconds": 10
+        }
+      ],
+      "settle": 1
     }
   ]
 }
