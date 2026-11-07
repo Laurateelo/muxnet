@@ -679,6 +679,53 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 23,
+      "ops": [
+        {
+          "kind": "save_figure",
+          "name": "figure_06_update"
+        },
+        {
+          "kind": "click",
+          "x": 113,
+          "y": 348
+        },
+        {
+          "kind": "click",
+          "x": 550,
+          "y": 152
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "http://localhost:8080/students/2"
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "s"
+          ]
+        },
+        {
+          "kind": "click",
+          "x": 931,
+          "y": 152
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        }
+      ],
+      "settle": 1
     }
   ]
 }
