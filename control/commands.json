@@ -450,6 +450,40 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 19,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 367,
+          "y": 127
+        },
+        {
+          "kind": "wait",
+          "seconds": 8
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "win",
+            "r"
+          ]
+        },
+        {
+          "kind": "wait",
+          "seconds": 0.7
+        },
+        {
+          "kind": "type",
+          "text": "cmd /k D:\\mysql\\bin\\mysql.exe -h127.0.0.1 -u root -e \"TRUNCATE TABLE lab3.student; SELECT COUNT(*) AS remaining_rows FROM lab3.student;\""
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        }
+      ],
+      "settle": 2
     }
   ]
 }
