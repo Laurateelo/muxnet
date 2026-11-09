@@ -348,6 +348,33 @@
         }
       ],
       "settle": 1.4
+    },
+    {
+      "id": 15,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 736,
+          "y": 746
+        },
+        {
+          "kind": "click",
+          "x": 486,
+          "y": 588
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "f"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "parameter name information"
+        }
+      ],
+      "settle": 1.5
     }
   ]
 }
