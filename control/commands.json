@@ -406,6 +406,21 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 17,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 111,
+          "y": 53
+        },
+        {
+          "kind": "type",
+          "text": "Java Compiler"
+        }
+      ],
+      "settle": 1.8
     }
   ]
 }
