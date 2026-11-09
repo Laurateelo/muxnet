@@ -196,6 +196,23 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 9,
+      "ops": [
+        {
+          "kind": "idea",
+          "action": "build-run"
+        },
+        {
+          "kind": "wait",
+          "seconds": 14
+        },
+        {
+          "kind": "probe_empty"
+        }
+      ],
+      "settle": 1
     }
   ]
 }
