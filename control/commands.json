@@ -850,6 +850,60 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 34,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 539,
+          "y": 335
+        },
+        {
+          "kind": "save_figure",
+          "name": "idea_exception_clean"
+        },
+        {
+          "kind": "click",
+          "x": 687,
+          "y": 746
+        },
+        {
+          "kind": "wait",
+          "seconds": 0.6
+        },
+        {
+          "kind": "click",
+          "x": 958,
+          "y": 112
+        },
+        {
+          "kind": "wait",
+          "seconds": 0.6
+        },
+        {
+          "kind": "click",
+          "x": 502,
+          "y": 152
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "http://localhost:8080/students"
+        },
+        {
+          "kind": "click",
+          "x": 931,
+          "y": 152
+        }
+      ],
+      "settle": 1.5
     }
   ]
 }
