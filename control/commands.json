@@ -53,6 +53,31 @@
         }
       ],
       "settle": 5
+    },
+    {
+      "id": 5,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 407,
+          "y": 447
+        },
+        {
+          "kind": "wait",
+          "seconds": 5
+        },
+        {
+          "kind": "click",
+          "x": 687,
+          "y": 747
+        },
+        {
+          "kind": "click",
+          "x": 517,
+          "y": 632
+        }
+      ],
+      "settle": 1
     }
   ]
 }
