@@ -119,6 +119,50 @@
         }
       ],
       "settle": 2
+    },
+    {
+      "id": 7,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 443,
+          "y": 339
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "a"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "Lab3 统一响应与异常处理"
+        },
+        {
+          "kind": "click",
+          "x": 779,
+          "y": 620
+        },
+        {
+          "kind": "wait",
+          "seconds": 4
+        },
+        {
+          "kind": "click",
+          "x": 737,
+          "y": 747
+        },
+        {
+          "kind": "idea",
+          "action": "prepare"
+        },
+        {
+          "kind": "wait",
+          "seconds": 8
+        }
+      ],
+      "settle": 1
     }
   ]
 }
