@@ -1,0 +1,12 @@
+<idea-plugin>
+  <id>lab3.windows.evidence</id>
+  <name>Lab3 Windows Evidence Driver</name>
+  <version>1.0</version>
+  <vendor>Lab Verification</vendor>
+  <idea-version since-build="223" until-build="223.*" />
+  <depends>com.intellij.modules.platform</depends>
+  <depends>com.intellij.java</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <postStartupActivity implementation="lab.evidence.LabDriver" />
+  </extensions>
+</idea-plugin>

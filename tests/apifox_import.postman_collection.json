@@ -1,0 +1,999 @@
+{
+  "info": {
+    "name": "实验三 统一响应与全局异常处理 29项测试",
+    "description": "前12项对应指导书必做请求，13和14为两个选做请求，其余为补充验证。按顺序运行；数据库需为空且自增编号从1开始。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "01 新增张三",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 1；预期业务 code = 200。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"张三\",\n  \"age\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": {\"id\": 1, \"name\": \"张三\", \"age\": 20}});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 新增李四",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 2；预期业务 code = 200。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"李四\",\n  \"age\": 21\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": {\"id\": 2, \"name\": \"李四\", \"age\": 21}});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 查询全部",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 3；预期业务 code = 200。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": [{\"id\": 1, \"name\": \"张三\", \"age\": 20}, {\"id\": 2, \"name\": \"李四\", \"age\": 21}]});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 按编号查询",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/1",
+        "description": "实测编号 4；预期业务 code = 200。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": {\"id\": 1, \"name\": \"张三\", \"age\": 20}});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 修改学生",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/1",
+        "description": "实测编号 5；预期业务 code = 200。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"张三丰\",\n  \"age\": 22\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 删除学生",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/2",
+        "description": "实测编号 6；预期业务 code = 200。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 查询不存在的学生",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/99",
+        "description": "实测编号 7；预期业务 code = 404。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 404, \"msg\": \"没有编号为 99 的学生\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 删除不存在的学生",
+      "request": {
+        "method": "DELETE",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/99",
+        "description": "实测编号 8；预期业务 code = 404。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 404, \"msg\": \"没有编号为 99 的学生\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 姓名为空字符串",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 9；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"age\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"姓名不能为空\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "10 年龄超上限",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 10；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"王五\",\n  \"age\": 200\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"年龄必须在 1 到 120 之间\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "11 错误 JSON",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 11；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"王五\", \"age\": }",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"请求数据格式错误，请检查 JSON\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "12 除零异常兜底",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/test/error",
+        "description": "实测编号 12；预期业务 code = 500。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 500, \"msg\": \"服务器内部错误，请联系管理员\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "13 选做一 地址不存在",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/student",
+        "description": "实测编号 13；预期业务 code = 404。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 404, \"msg\": \"接口地址不存在\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "14 选做二 新增同名学生",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 14；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"张三丰\",\n  \"age\": 23\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"姓名已存在\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "15 修改不存在的学生",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/99",
+        "description": "实测编号 15；预期业务 code = 404。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"不存在\",\n  \"age\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 404, \"msg\": \"没有编号为 99 的学生\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "16 姓名仅包含空格",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 16；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"   \",\n  \"age\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"姓名不能为空\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "17 缺失姓名字段",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 17；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"age\": 20\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"姓名不能为空\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "18 年龄为 null",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 18；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"空年龄\",\n  \"age\": null\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"年龄不能为空\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "19 年龄为零",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 19；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"下界外\",\n  \"age\": 0\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"年龄必须在 1 到 120 之间\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "20 年龄下界 1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 20；预期业务 code = 200。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"下界\",\n  \"age\": 1\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": {\"id\": 3, \"name\": \"下界\", \"age\": 1}});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "21 年龄上界 120",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 21；预期业务 code = 200。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"上界\",\n  \"age\": 120\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": {\"id\": 4, \"name\": \"上界\", \"age\": 120}});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "22 更新采用路径编号",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/1",
+        "description": "实测编号 22；预期业务 code = 200。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"id\": 999,\n  \"name\": \"张三丰\",\n  \"age\": 22\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "23 验证修改目标",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/1",
+        "description": "实测编号 23；预期业务 code = 200。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": {\"id\": 1, \"name\": \"张三丰\", \"age\": 22}});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "24 更新也校验姓名",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/1",
+        "description": "实测编号 24；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"\",\n  \"age\": 22\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"姓名不能为空\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "25 重复提交相同更新",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/1",
+        "description": "实测编号 25；预期业务 code = 200。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"张三丰\",\n  \"age\": 22\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "26 年龄紧邻上界 121",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 26；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"上界外\",\n  \"age\": 121\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"年龄必须在 1 到 120 之间\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "27 查询已删除学生",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students/2",
+        "description": "实测编号 27；预期业务 code = 404。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 404, \"msg\": \"没有编号为 2 的学生\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "28 缺失年龄字段",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 28；预期业务 code = 400。请按顺序在新建空数据库中运行。",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"缺年龄\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 400, \"msg\": \"年龄不能为空\", \"data\": null});",
+              "});"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "29 最终数据完整性",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{baseUrl}}/students",
+        "description": "实测编号 29；预期业务 code = 200。请按顺序在新建空数据库中运行。"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP status 200\", function () { pm.response.to.have.status(200); });",
+              "pm.test(\"Response matches expected\", function () {",
+              "  pm.expect(pm.response.json()).to.eql({\"code\": 200, \"msg\": \"成功\", \"data\": [{\"id\": 1, \"name\": \"张三丰\", \"age\": 22}, {\"id\": 3, \"name\": \"下界\", \"age\": 1}, {\"id\": 4, \"name\": \"上界\", \"age\": 120}]});",
+              "});"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
