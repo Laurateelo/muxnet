@@ -421,6 +421,35 @@
         }
       ],
       "settle": 1.8
+    },
+    {
+      "id": 18,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 457,
+          "y": 530
+        },
+        {
+          "kind": "type",
+          "text": "-parameters"
+        },
+        {
+          "kind": "click",
+          "x": 785,
+          "y": 695
+        },
+        {
+          "kind": "wait",
+          "seconds": 1
+        },
+        {
+          "kind": "click",
+          "x": 317,
+          "y": 14
+        }
+      ],
+      "settle": 1
     }
   ]
 }
