@@ -78,6 +78,47 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 6,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 656,
+          "y": 633
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        },
+        {
+          "kind": "click",
+          "x": 719,
+          "y": 476
+        },
+        {
+          "kind": "wait",
+          "seconds": 1.5
+        },
+        {
+          "kind": "click",
+          "x": 360,
+          "y": 489
+        },
+        {
+          "kind": "wait",
+          "seconds": 1.5
+        },
+        {
+          "kind": "type",
+          "text": "D:\\workspace\\lab3-demo\\lab3-native-requests.json"
+        },
+        {
+          "kind": "press",
+          "key": "enter"
+        }
+      ],
+      "settle": 2
     }
   ]
 }
