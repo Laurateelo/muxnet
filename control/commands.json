@@ -513,6 +513,47 @@
         }
       ],
       "settle": 1
+    },
+    {
+      "id": 21,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 687,
+          "y": 747
+        },
+        {
+          "kind": "wait",
+          "seconds": 0.8
+        },
+        {
+          "kind": "drag",
+          "x": 621,
+          "y": 337,
+          "to_x": 621,
+          "to_y": 466
+        },
+        {
+          "kind": "click",
+          "x": 122,
+          "y": 168
+        },
+        {
+          "kind": "wait",
+          "seconds": 0.6
+        },
+        {
+          "kind": "click",
+          "x": 327,
+          "y": 201
+        },
+        {
+          "kind": "click",
+          "x": 932,
+          "y": 152
+        }
+      ],
+      "settle": 1.5
     }
   ]
 }
