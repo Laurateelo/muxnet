@@ -375,6 +375,37 @@
         }
       ],
       "settle": 1.5
+    },
+    {
+      "id": 16,
+      "ops": [
+        {
+          "kind": "press",
+          "key": "esc"
+        },
+        {
+          "kind": "click",
+          "x": 925,
+          "y": 42
+        },
+        {
+          "kind": "wait",
+          "seconds": 2
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "alt",
+            "s"
+          ]
+        },
+        {
+          "kind": "wait",
+          "seconds": 1.5
+        }
+      ],
+      "settle": 1
     }
   ]
 }
