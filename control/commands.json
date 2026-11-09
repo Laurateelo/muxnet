@@ -815,6 +815,41 @@
         }
       ],
       "settle": 1.4
+    },
+    {
+      "id": 33,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 736,
+          "y": 746
+        },
+        {
+          "kind": "click",
+          "x": 94,
+          "y": 606
+        },
+        {
+          "kind": "keys",
+          "keys": [
+            "ctrl",
+            "f"
+          ]
+        },
+        {
+          "kind": "type",
+          "text": "ArithmeticException"
+        },
+        {
+          "kind": "wait",
+          "seconds": 1
+        },
+        {
+          "kind": "press",
+          "key": "esc"
+        }
+      ],
+      "settle": 1
     }
   ]
 }
