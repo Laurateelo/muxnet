@@ -606,6 +606,35 @@
         }
       ],
       "settle": 1.3
+    },
+    {
+      "id": 24,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 390,
+          "y": 685
+        },
+        {
+          "kind": "save_figure",
+          "name": "apifox_case_03_clean"
+        },
+        {
+          "kind": "click",
+          "x": 122,
+          "y": 258
+        },
+        {
+          "kind": "wait",
+          "seconds": 0.6
+        },
+        {
+          "kind": "click",
+          "x": 932,
+          "y": 152
+        }
+      ],
+      "settle": 1.3
     }
   ]
 }
