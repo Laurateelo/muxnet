@@ -924,6 +924,38 @@
         }
       ],
       "settle": 1.4
+    },
+    {
+      "id": 36,
+      "ops": [
+        {
+          "kind": "click",
+          "x": 122,
+          "y": 558
+        },
+        {
+          "kind": "wait",
+          "seconds": 0.6
+        },
+        {
+          "kind": "click",
+          "x": 327,
+          "y": 201
+        },
+        {
+          "kind": "click",
+          "x": 932,
+          "y": 152
+        },
+        {
+          "kind": "wait",
+          "seconds": 1.5
+        },
+        {
+          "kind": "check_db"
+        }
+      ],
+      "settle": 1
     }
   ]
 }
